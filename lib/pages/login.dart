@@ -15,6 +15,8 @@ var deviceHeight;
 var deviceWidth;
 
 class _LoginState extends State<Login> {
+  GlobalKey<FormState> _loginFormKey = GlobalKey();
+  String? userName, password;
   @override
   Widget build(BuildContext context) {
     deviceHeight = MediaQuery.of(context).size.height;
@@ -63,79 +65,112 @@ class _LoginState extends State<Login> {
       height: deviceHeight * 0.5,
       width: deviceWidth,
       child: Form(
+          key: _loginFormKey,
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Start Cooking With Confidence...",
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Color.fromRGBO(214, 154, 3, 1),
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(9.0),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                hintText: "Username",
-                hintStyle: TextStyle(color: Colors.grey)),
-            style: const TextStyle(
-              color: Colors.white, // Set text color to white
-            ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(9.0),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                hintText: "Password",
-                hintStyle: TextStyle(color: Colors.grey)),
-            style: const TextStyle(
-              color: Colors.white, // Set text color to white
-            ),
-          ),
-          const Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "Forgot Password?",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          //SizedBox(height: deviceHeight * 0.05),
-          ElevatedButton(
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => FirstPage())),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(156, 112, 1, 1),
-              ),
-              child: const Text('Log In',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ))),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "Don't have an account? ",
-                style: TextStyle(color: Colors.white),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Start Cooking With Confidence...",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Color.fromRGBO(214, 154, 3, 1),
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
-              Text(
-                "Sign up",
-                style: TextStyle(color: Color.fromRGBO(156, 112, 1, 1)),
+              TextFormField(
+                //initialValue: "",
+                onSaved: (value) {
+                  setState(() {
+                    userName = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter a username";
+                  }
+                },
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.all(9.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    hintText: "Username",
+                    hintStyle: TextStyle(color: Colors.grey)),
+                style: const TextStyle(
+                  color: Colors.white, // Set text color to white
+                ),
               ),
+              TextFormField(
+                //initialValue: "",
+                onSaved: (value) {
+                  setState(() {
+                    password = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.length < 5) {
+                    return "Enter a valid Password";
+                  }
+                },
+                obscureText: true,
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.all(9.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    hintText: "Password",
+                    hintStyle: TextStyle(color: Colors.grey)),
+                style: const TextStyle(
+                  color: Colors.white, // Set text color to white
+                ),
+              ),
+              const Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  "Forgot Password?",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              loginButton(),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account? ",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    "Sign up",
+                    style: TextStyle(color: Color.fromRGBO(156, 112, 1, 1)),
+                  ),
+                ],
+              )
             ],
-          )
-        ],
-      )),
+          )),
     );
   }
+
+  Widget loginButton() {
+    return ElevatedButton(
+        onPressed: () {
+          if (_loginFormKey.currentState?.validate() ?? false) {
+            _loginFormKey.currentState?.save();
+            //print("$userName - $password");
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromRGBO(156, 112, 1, 1),
+        ),
+        child: const Text('Log In',
+            style: TextStyle(
+              fontSize: 24,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+            )));
+  }
 }
+/* => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => FirstPage()))*/
