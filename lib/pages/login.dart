@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recipe_app/pages/first_page.dart';
-import 'package:recipe_app/splash_screen.dart';
-import 'package:recipe_app/util/gradient.dart';
+//import 'package:recipe_app/pages/first_page.dart';
+import 'package:recipe_app/services/auth_service.dart';
+//import 'package:recipe_app/splash_screen.dart';
+//import 'package:recipe_app/util/gradient.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -71,67 +72,78 @@ class _LoginState extends State<Login> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Start Cooking With Confidence...",
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromRGBO(214, 154, 3, 1),
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w400),
+              const SizedBox(
+                child: FractionalTranslation(
+                  translation: Offset(-0.1, 0),
+                  child: Text(
+                    "Start Cooking With Confidence...",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Color.fromRGBO(214, 154, 3, 1),
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
               ),
-              TextFormField(
-                //initialValue: "",
-                onSaved: (value) {
-                  setState(() {
-                    userName = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter a username";
-                  }
-                },
-                decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(9.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: "Username",
-                    hintStyle: TextStyle(color: Colors.grey)),
-                style: const TextStyle(
-                  color: Colors.white, // Set text color to white
+              SizedBox(
+                width: deviceWidth * 0.87,
+                child: TextFormField(
+                  initialValue: "Shayor",
+                  onSaved: (value) {
+                    setState(() {
+                      userName = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Enter a username";
+                    }
+                  },
+                  decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(9.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      hintText: "Username",
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  style: const TextStyle(
+                    color: Colors.white, // Set text color to white
+                  ),
                 ),
               ),
-              TextFormField(
-                //initialValue: "",
-                onSaved: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.length < 5) {
-                    return "Enter a valid Password";
-                  }
-                },
-                obscureText: true,
-                decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(9.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    hintText: "Password",
-                    hintStyle: TextStyle(color: Colors.grey)),
-                style: const TextStyle(
-                  color: Colors.white, // Set text color to white
+              SizedBox(
+                width: deviceWidth * 0.87,
+                child: TextFormField(
+                  initialValue: "abedciu",
+                  onSaved: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.length < 5) {
+                      return "Enter a valid Password";
+                    }
+                  },
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(9.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      hintText: "Password",
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  style: const TextStyle(
+                    color: Colors.white, // Set text color to white
+                  ),
                 ),
               ),
-              const Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Forgot Password?",
-                  style: TextStyle(color: Colors.white),
+              SizedBox(
+                width: deviceWidth,
+                child: const FractionalTranslation(
+                  translation: Offset(0.6, -0.55),
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               loginButton(),
@@ -155,9 +167,10 @@ class _LoginState extends State<Login> {
 
   Widget loginButton() {
     return ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           if (_loginFormKey.currentState?.validate() ?? false) {
             _loginFormKey.currentState?.save();
+            bool result = await AuthService().login(userName!, password!);
             //print("$userName - $password");
           }
         },
