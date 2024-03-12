@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
               SizedBox(
                 width: deviceWidth * 0.87,
                 child: TextFormField(
-                  initialValue: "Shayor",
+                  initialValue: "kminchelle",
                   onSaved: (value) {
                     setState(() {
                       userName = value;
@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
               SizedBox(
                 width: deviceWidth * 0.87,
                 child: TextFormField(
-                  initialValue: "abedciu",
+                  initialValue: "0lelplR",
                   onSaved: (value) {
                     setState(() {
                       password = value;
