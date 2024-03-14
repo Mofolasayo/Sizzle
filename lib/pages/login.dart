@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:recipe_app/pages/first_page.dart';
 import 'package:recipe_app/services/auth_service.dart';
+import 'package:status_alert/status_alert.dart';
 //import 'package:recipe_app/splash_screen.dart';
 //import 'package:recipe_app/util/gradient.dart';
 
@@ -12,11 +13,13 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+// ignore: prefer_typing_uninitialized_variables
 var deviceHeight;
+// ignore: prefer_typing_uninitialized_variables
 var deviceWidth;
 
 class _LoginState extends State<Login> {
-  GlobalKey<FormState> _loginFormKey = GlobalKey();
+  final GlobalKey<FormState> _loginFormKey = GlobalKey();
   String? userName, password;
   @override
   Widget build(BuildContext context) {
@@ -171,7 +174,32 @@ class _LoginState extends State<Login> {
           if (_loginFormKey.currentState?.validate() ?? false) {
             _loginFormKey.currentState?.save();
             bool result = await AuthService().login(userName!, password!);
-            //print("$userName - $password");
+            if (result) {
+              // ignore: use_build_context_synchronously
+              Navigator.pushReplacementNamed(context, "/home");
+            } else {
+              // ignore: use_build_context_synchronously
+              StatusAlert.show(
+                context,
+                duration: const Duration(seconds: 2),
+                backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
+                title: 'Login failed',
+                titleOptions: StatusAlertTextConfiguration(
+                    style: const TextStyle(color: Colors.white, fontSize: 20)),
+                subtitle: 'Please try again',
+                subtitleOptions: StatusAlertTextConfiguration(
+                    style: const TextStyle(color: Colors.white, fontSize: 14)),
+                configuration: const IconConfiguration(
+                  size: 80,
+                  color: Color.fromRGBO(156, 112, 1, 1),
+                  icon: Icons.error,
+                ),
+                borderRadius: BorderRadius.circular(30),
+                dismissOnBackgroundTap: true,
+                maxWidth: 200,
+                //blurPower: 1
+              );
+            }
           }
         },
         style: ElevatedButton.styleFrom(
@@ -179,9 +207,9 @@ class _LoginState extends State<Login> {
         ),
         child: const Text('Log In',
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 25,
               color: Colors.black,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
             )));
   }
 }

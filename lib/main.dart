@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/pages/home_page.dart';
+import 'package:recipe_app/pages/login.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/splash_screen.dart';
 
@@ -12,21 +14,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sizzle',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromRGBO(214, 154, 3, 1)),
-        //brightness: Brightness.dark,
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: Colors.white), // Set text color globally
-        ),
-        useMaterial3: true,
+        title: 'Sizzle',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromRGBO(214, 154, 3, 1)),
+          //brightness: Brightness.dark,
+          textTheme: const TextTheme(
+            bodyMedium:
+                TextStyle(color: Colors.white), // Set text color globally
+          ),
 
-        //textTheme: GoogleFonts.lemonTextTheme(),
-      ),
-      home: const SplashScreen(),
-    );
+          useMaterial3: true,
+
+          //textTheme: GoogleFonts.lemonTextTheme(),
+        ),
+        initialRoute: "/splash",
+        routes: {
+          "/splash": (context) => const SplashScreen(),
+          "/login": (context) => const Login(),
+          "/home": (context) => const HomePage(),
+        });
   }
 }
 
