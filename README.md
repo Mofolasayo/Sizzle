@@ -63,8 +63,13 @@ class HTTPService {
           if (status == null) return false;
           return status < 500;
         });
-    _dio.options = option```
+    _dio.options = option
+```
 
+![sizzle1](https://github.com/Mofolasayo/Sizzle/assets/115883934/cf6a2834-1587-4a57-9536-d2b82e3d09e3)
+![sizzle2](https://github.com/Mofolasayo/Sizzle/assets/115883934/d07cdd4c-c301-4413-bc62-e3b5a6921061)
+![sizzle3](https://github.com/Mofolasayo/Sizzle/assets/115883934/597cfaeb-8d86-4e2e-a797-677c2c765aaa)
+![sizzle4](https://github.com/Mofolasayo/Sizzle/assets/115883934/ee7d2844-59a5-43a6-ae8b-12d1d756d7ae)
 
 
 
