@@ -3,6 +3,7 @@ import 'package:recipe_app/pages/home_page.dart';
 import 'package:recipe_app/pages/login.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/splash_screen.dart';
+import 'package:recipe_app/util/smoke_animation.dart';
 
 void main() {
   runApp(const MyApp());
